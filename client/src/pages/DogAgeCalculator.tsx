@@ -3,6 +3,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft, ArrowRight, Check, Calendar, Dog } from 'lucide-react';
 import { Link } from 'wouter';
+import { SEO, generateCalculatorSchema, generateFAQSchema } from '@/components/SEO';
+import { Breadcrumb } from '@/components/Breadcrumb';
 
 type DogSize = 'small' | 'medium' | 'large' | 'giant';
 
@@ -20,6 +22,25 @@ interface AgeResult {
   stageDescription: string;
   healthTips: string[];
 }
+
+const dogAgeFAQs = [
+  {
+    question: "Is 1 dog year really equal to 7 human years?",
+    answer: "No, this is a myth! Dogs age much faster in their first two years, then slow down. A 1-year-old dog is actually about 15 in human years, and a 2-year-old is about 24. After that, each dog year equals roughly 4-7 human years depending on size."
+  },
+  {
+    question: "Why does dog size affect their age in human years?",
+    answer: "Larger dogs tend to age faster and have shorter lifespans than smaller dogs. A Great Dane is considered senior at 6-7 years, while a Chihuahua might not be senior until 10-11 years. Scientists believe this is related to how quickly large dogs grow."
+  },
+  {
+    question: "What are the life stages of a dog?",
+    answer: "Dogs go through Puppy (0-1 year), Adolescent (1-2 years), Adult (2-7 years), and Senior (7+ years) stages. However, these ranges vary by size - large breeds become seniors earlier than small breeds."
+  },
+  {
+    question: "How can I help my dog live longer?",
+    answer: "Regular vet checkups, proper nutrition, daily exercise, dental care, and maintaining a healthy weight are key. Mental stimulation through play and training also contributes to longevity and quality of life."
+  }
+];
 
 export default function DogAgeCalculator() {
   const [step, setStep] = useState<'input' | 'size' | 'results'>('input');
@@ -169,8 +190,27 @@ export default function DogAgeCalculator() {
     );
   };
 
+  const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex flex-col">
+      <SEO
+        title="Dog Age Calculator - Convert Dog Years to Human Years | PawCalc"
+        description="Accurately calculate your dog's age in human years with our free calculator. Uses the latest research considering dog size for precise age conversion."
+        canonical={`${baseUrl}/calculator/dog-age`}
+        keywords={['dog age calculator', 'dog years to human years', 'how old is my dog', 'dog age converter', 'pet age calculator']}
+        schema={{
+          "@context": "https://schema.org",
+          "@graph": [
+            generateCalculatorSchema(
+              "Dog Age Calculator",
+              "Free online calculator to convert your dog's age to human years, accounting for size differences.",
+              `${baseUrl}/calculator/dog-age`
+            ),
+            generateFAQSchema(dogAgeFAQs)
+          ]
+        }}
+      />
       {/* Header */}
       <header className="container py-6 flex items-center justify-between">
         <Link href="/">
@@ -187,7 +227,15 @@ export default function DogAgeCalculator() {
         </Link>
       </header>
 
-      {/* Progress Bar */}
+      {/* Breadcrumb */}
+      <div className="container">
+        <Breadcrumb items={[
+          { label: 'Calculators', href: '/#tools' },
+          { label: 'Dog Age Calculator' }
+        ]} />
+      </div>
+
+      {/* Progress Indicator */}
       {renderProgressBar()}
 
       {/* Main Content */}

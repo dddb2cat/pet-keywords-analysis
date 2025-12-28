@@ -4,6 +4,8 @@ import { Input } from '@/components/ui/input';
 import { ArrowLeft, ArrowRight, Check, Info } from 'lucide-react';
 import { Link, useParams } from 'wouter';
 import { getBreedBySlug, getBreedCalorieMultiplier, getBreedSEO, breeds, type BreedInfo } from '@/lib/breeds';
+import { SEO, generateCalculatorSchema, generateFAQSchema } from '@/components/SEO';
+import { Breadcrumb } from '@/components/Breadcrumb';
 
 type Step = 'info' | 'name' | 'weight' | 'body-condition' | 'activity' | 'results';
 
@@ -151,8 +153,43 @@ export default function BreedCalorieCalculator() {
     );
   };
 
+  const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
+  const seo = getBreedSEO(breed);
+  
+  const breedFAQs = [
+    {
+      question: `How many calories does a ${breed.name} need per day?`,
+      answer: `A ${breed.name} typically needs between ${Math.round(70 * Math.pow(breed.averageWeight.min, 0.75) * 1.4)} and ${Math.round(70 * Math.pow(breed.averageWeight.max, 0.75) * 1.6)} calories per day, depending on their activity level, age, and body condition. Use our calculator for a personalized recommendation.`
+    },
+    {
+      question: `What is the ideal weight for a ${breed.name}?`,
+      answer: `The ideal weight for a ${breed.name} is typically between ${breed.averageWeight.min} and ${breed.averageWeight.max} kg. However, individual dogs may vary. Consult your vet for personalized guidance.`
+    },
+    {
+      question: `How long do ${breed.name}s typically live?`,
+      answer: `${breed.name}s typically live ${breed.lifeExpectancy.min} to ${breed.lifeExpectancy.max} years. Proper nutrition, regular exercise, and routine vet care can help maximize your dog's lifespan.`
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-blue-50 flex flex-col">
+      <SEO
+        title={seo.title}
+        description={seo.description}
+        canonical={`${baseUrl}/calculator/${breedSlug}`}
+        keywords={[`${breed.name.toLowerCase()} calorie calculator`, `${breed.name.toLowerCase()} food calculator`, `how much to feed ${breed.name.toLowerCase()}`, `${breed.name.toLowerCase()} diet`, `${breed.name.toLowerCase()} nutrition`]}
+        schema={{
+          "@context": "https://schema.org",
+          "@graph": [
+            generateCalculatorSchema(
+              `${breed.name} Calorie Calculator`,
+              seo.description,
+              `${baseUrl}/calculator/${breedSlug}`
+            ),
+            generateFAQSchema(breedFAQs)
+          ]
+        }}
+      />
       {/* Header */}
       <header className="container py-6 flex items-center justify-between">
         <Link href="/">
@@ -168,6 +205,15 @@ export default function BreedCalorieCalculator() {
           </Button>
         </Link>
       </header>
+
+      {/* Breadcrumb */}
+      <div className="container">
+        <Breadcrumb items={[
+          { label: 'Calculators', href: '/#tools' },
+          { label: 'Dog Calorie', href: '/calculator/dog-calorie' },
+          { label: breed.name }
+        ]} />
+      </div>
 
       {/* Progress Bar */}
       {renderProgressBar()}

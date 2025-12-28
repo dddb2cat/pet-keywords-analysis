@@ -1,0 +1,28 @@
+# PawCalc - Pet Tools Website
+# https://pawcalc.com
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://pawcalc.com/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Block access to internal/admin pages
+Disallow: /api/
+Disallow: /admin/
+
+# Allow all major search engine bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /

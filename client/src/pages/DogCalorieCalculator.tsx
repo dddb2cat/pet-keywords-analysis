@@ -3,6 +3,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import { Link } from 'wouter';
+import { SEO, generateCalculatorSchema, generateFAQSchema } from '@/components/SEO';
+import { Breadcrumb } from '@/components/Breadcrumb';
 
 type Step = 'name' | 'weight' | 'body-condition' | 'activity' | 'results';
 
@@ -13,6 +15,25 @@ interface FormData {
   bodyCondition: 'underweight' | 'ideal' | 'overweight';
   activityLevel: 'sedentary' | 'moderate' | 'active' | 'very-active';
 }
+
+const dogCalorieFAQs = [
+  {
+    question: "How many calories does my dog need per day?",
+    answer: "A dog's daily calorie needs depend on their weight, age, activity level, and body condition. Generally, dogs need 25-30 calories per pound of body weight for maintenance. Our calculator uses the scientifically-backed RER formula (70 × weight^0.75) adjusted for activity level."
+  },
+  {
+    question: "How do I know if my dog is overweight?",
+    answer: "You can assess your dog's weight by feeling their ribs - you should be able to feel them with light pressure. Look for a visible waist when viewed from above, and a tucked abdomen when viewed from the side. If ribs are hard to feel or there's no visible waist, your dog may be overweight."
+  },
+  {
+    question: "Should I feed my dog more if they're very active?",
+    answer: "Yes! Active dogs burn more calories and need more food. A highly active dog (like working dogs or those who exercise vigorously for over an hour daily) may need 1.5-2x the calories of a sedentary dog of the same weight."
+  },
+  {
+    question: "How accurate is this dog calorie calculator?",
+    answer: "Our calculator uses the RER (Resting Energy Requirement) formula recommended by veterinary nutritionists. While it provides a good starting point, individual dogs may vary. Monitor your dog's weight and adjust portions accordingly, and consult your vet for personalized advice."
+  }
+];
 
 export default function DogCalorieCalculator() {
   const [currentStep, setCurrentStep] = useState<Step>('name');
@@ -78,8 +99,27 @@ export default function DogCalorieCalculator() {
     }
   };
 
+  const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-blue-50 flex flex-col">
+      <SEO
+        title="Dog Calorie Calculator - Daily Food Requirements | PawCalc"
+        description="Calculate your dog's daily calorie needs with our free, science-backed calculator. Get personalized feeding recommendations based on weight, activity level, and body condition."
+        canonical={`${baseUrl}/calculator/dog-calorie`}
+        keywords={['dog calorie calculator', 'dog food calculator', 'how many calories dog', 'dog feeding guide', 'pet nutrition calculator']}
+        schema={{
+          "@context": "https://schema.org",
+          "@graph": [
+            generateCalculatorSchema(
+              "Dog Calorie Calculator",
+              "Free online calculator to determine your dog's daily calorie requirements based on weight, activity level, and body condition.",
+              `${baseUrl}/calculator/dog-calorie`
+            ),
+            generateFAQSchema(dogCalorieFAQs)
+          ]
+        }}
+      />
       {/* Header */}
       <header className="container py-6 flex items-center justify-between">
         <Link href="/">
@@ -95,6 +135,14 @@ export default function DogCalorieCalculator() {
           </Button>
         </Link>
       </header>
+
+      {/* Breadcrumb */}
+      <div className="container">
+        <Breadcrumb items={[
+          { label: 'Calculators', href: '/#tools' },
+          { label: 'Dog Calorie Calculator' }
+        ]} />
+      </div>
 
       {/* Progress Bar */}
       <div className="container mb-8">
