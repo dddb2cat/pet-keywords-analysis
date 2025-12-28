@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
-import { Calculator, Heart, TrendingUp, Users } from 'lucide-react';
+import { Calculator, Heart, TrendingUp, Calendar, Dog } from 'lucide-react';
 import { Link } from 'wouter';
+import { breeds } from '@/lib/breeds';
 
 export default function LandingPage() {
   return (
@@ -44,15 +45,17 @@ export default function LandingPage() {
                 Try Dog Calorie Calculator
               </Button>
             </Link>
-            <Button size="lg" variant="outline" className="px-8 py-6 text-lg">
-              View All Tools
-            </Button>
+            <Link href="#tools">
+              <Button size="lg" variant="outline" className="px-8 py-6 text-lg">
+                View All Tools
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
 
       {/* Tools Grid */}
-      <section className="container py-16">
+      <section id="tools" className="container py-16">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Popular Pet Tools</h2>
           <p className="text-gray-600">Choose a calculator to get started</p>
@@ -76,20 +79,24 @@ export default function LandingPage() {
             </div>
           </Link>
 
-          {/* Coming Soon Cards */}
-          <div className="bg-white rounded-2xl p-8 shadow-sm border-2 border-gray-100 opacity-60">
-            <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-4">
-              <Calculator className="w-6 h-6 text-gray-400" />
+          {/* Dog Age Calculator Card - NOW ACTIVE */}
+          <Link href="/calculator/dog-age">
+            <div className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-blue-200">
+              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <Calendar className="w-6 h-6 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Dog Age Calculator</h3>
+              <p className="text-gray-600 mb-4">
+                Convert your dog's age to human years with size-specific accuracy.
+              </p>
+              <div className="flex items-center text-blue-600 font-medium">
+                Start Calculator
+                <TrendingUp className="w-4 h-4 ml-2" />
+              </div>
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Dog Age Calculator</h3>
-            <p className="text-gray-600 mb-4">
-              Convert your dog's age to human years with breed-specific accuracy.
-            </p>
-            <div className="inline-block px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded-full">
-              Coming Soon
-            </div>
-          </div>
+          </Link>
 
+          {/* Coming Soon - Cat Calorie */}
           <div className="bg-white rounded-2xl p-8 shadow-sm border-2 border-gray-100 opacity-60">
             <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-4">
               <Calculator className="w-6 h-6 text-gray-400" />
@@ -102,6 +109,37 @@ export default function LandingPage() {
               Coming Soon
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Breed-Specific Calculators Section */}
+      <section className="container py-16 bg-gradient-to-b from-white to-orange-50">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <Dog className="w-8 h-8 inline-block mr-2 text-orange-500" />
+            Breed-Specific Calculators
+          </h2>
+          <p className="text-gray-600">Tailored nutrition advice for your specific breed</p>
+        </div>
+        
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 max-w-5xl mx-auto">
+          {breeds.map((breed) => (
+            <Link key={breed.id} href={`/calculator/${breed.slug}`}>
+              <div className="group bg-white rounded-xl p-4 shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer border border-gray-100 hover:border-orange-300 text-center">
+                <div className="text-3xl mb-2">🐕</div>
+                <h3 className="font-semibold text-gray-900 text-sm group-hover:text-orange-600 transition-colors">
+                  {breed.name}
+                </h3>
+                <p className="text-xs text-gray-500 mt-1">Calorie Calculator</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+        
+        <div className="text-center mt-8">
+          <p className="text-sm text-gray-500">
+            Each breed has unique nutritional needs. Our calculators account for breed-specific metabolism and activity levels.
+          </p>
         </div>
       </section>
 

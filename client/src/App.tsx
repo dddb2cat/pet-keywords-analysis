@@ -7,6 +7,8 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import LandingPage from "./pages/LandingPage";
 import ResearchPage from "./pages/ResearchPage";
 import DogCalorieCalculator from "./pages/DogCalorieCalculator";
+import BreedCalorieCalculator from "./pages/BreedCalorieCalculator";
+import DogAgeCalculator from "./pages/DogAgeCalculator";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -15,6 +17,9 @@ function Router() {
       <Route path={"/"} component={LandingPage} />
       <Route path="/research" component={ResearchPage} />
       <Route path="/calculator/dog-calorie" component={DogCalorieCalculator} />
+      <Route path="/calculator/dog-age" component={DogAgeCalculator} />
+      {/* Breed-specific calorie calculators for programmatic SEO */}
+      <Route path="/calculator/:breed" component={BreedCalorieCalculator} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

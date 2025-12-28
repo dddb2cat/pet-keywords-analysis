@@ -34,8 +34,18 @@
 
 ## Future Features
 - [ ] Cat calorie calculator
-- [ ] Dog age calculator
 - [ ] Pet name generator
+
+## Current Sprint - Programmatic SEO & Tool Matrix
+- [x] Create breed-specific calorie calculator pages (5 breeds)
+  - [x] Golden Retriever Calorie Calculator
+  - [x] Labrador Retriever Calorie Calculator
+  - [x] French Bulldog Calorie Calculator
+  - [x] German Shepherd Calorie Calculator
+  - [x] Poodle Calorie Calculator
+- [x] Create Dog Age Calculator tool
+- [x] Update landing page with new tools
+- [x] Add breed selector to main calculator
 
 ## Bug Fixes
 - [x] Fix progress bar connector lines alignment issue
