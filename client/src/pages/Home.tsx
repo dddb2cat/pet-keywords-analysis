@@ -7,7 +7,7 @@ import {
   Search, TrendingUp, DollarSign, BarChart2, ArrowUpRight, 
   Download, Share2, Info, PawPrint, Activity, Zap 
 } from 'lucide-react';
-import { keywordData, industryBenchmarks, trendData, KeywordData } from '@/lib/data';
+import { keywordData, industryBenchmarks, trendData, competitorAnalysis, KeywordData } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import * as Tabs from '@radix-ui/react-tabs';
 import * as ScrollArea from '@radix-ui/react-scroll-area';
@@ -21,10 +21,15 @@ export default function Home() {
   });
 
   const sortedData = [...keywordData].sort((a, b) => {
-    if (a[sortConfig.key] < b[sortConfig.key]) {
+    const aValue = a[sortConfig.key];
+    const bValue = b[sortConfig.key];
+    
+    if (aValue === undefined || bValue === undefined) return 0;
+    
+    if (aValue < bValue) {
       return sortConfig.direction === 'asc' ? -1 : 1;
     }
-    if (a[sortConfig.key] > b[sortConfig.key]) {
+    if (aValue > bValue) {
       return sortConfig.direction === 'asc' ? 1 : -1;
     }
     return 0;
@@ -73,8 +78,8 @@ export default function Home() {
             </h3>
             <p className="text-3xl font-bold text-foreground">Dog Calorie Calc</p>
             <div className="mt-4 flex items-center gap-2 text-sm text-green-600 font-medium">
-              <span className="bg-green-100 dark:bg-green-900/30 px-2 py-1 rounded-full">95/100 Score</span>
-              <span>Very Low Competition</span>
+              <span className="bg-green-100 dark:bg-green-900/30 px-2 py-1 rounded-full">98/100 Score</span>
+              <span>Very Low Competition (UX)</span>
             </div>
           </div>
 
@@ -177,12 +182,19 @@ export default function Home() {
                     <tbody>
                       {sortedData.map((item, index) => (
                         <tr key={item.id} className="group hover:bg-primary/5 transition-colors border-b border-border/30 last:border-0">
-                          <td className="py-4 px-4 font-medium text-foreground flex items-center gap-2">
-                            <span className="w-6 h-6 rounded-full bg-muted flex items-center justify-center text-xs text-muted-foreground font-bold">
-                              {index + 1}
-                            </span>
-                            {item.keyword}
-                            {item.trend === 'explosive' && <TrendingUp className="w-4 h-4 text-secondary" />}
+                          <td className="py-4 px-4 font-medium text-foreground flex flex-col gap-1">
+                            <div className="flex items-center gap-2">
+                              <span className="w-6 h-6 rounded-full bg-muted flex items-center justify-center text-xs text-muted-foreground font-bold">
+                                {index + 1}
+                              </span>
+                              {item.keyword}
+                              {item.trend === 'explosive' && <TrendingUp className="w-4 h-4 text-secondary" />}
+                            </div>
+                            {item.uxGap && (
+                              <div className="ml-8 text-xs text-primary bg-primary/10 px-2 py-1 rounded-md w-fit">
+                                💡 UX Opportunity: {item.uxGap}
+                              </div>
+                            )}
                           </td>
                           <td className="py-4 px-4">
                             <div className="flex items-center gap-2">
@@ -226,6 +238,40 @@ export default function Home() {
                   <ScrollArea.Thumb className="bg-muted-foreground/50 rounded-full" />
                 </ScrollArea.Scrollbar>
               </ScrollArea.Root>
+            </div>
+
+            {/* Competitor Analysis Section */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {competitorAnalysis.map((comp, i) => (
+                <div key={i} className="neu-card p-6">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h3 className="font-bold text-lg">{comp.name}</h3>
+                      <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded-full">{comp.type}</span>
+                    </div>
+                    <span className={cn(
+                      "text-xs font-bold px-2 py-1 rounded-full",
+                      comp.vulnerability === 'High' ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"
+                    )}>
+                      {comp.vulnerability} Vulnerability
+                    </span>
+                  </div>
+                  <div className="space-y-4">
+                    <div>
+                      <p className="text-xs font-semibold text-green-600 mb-1">PROS</p>
+                      <ul className="text-sm text-muted-foreground list-disc list-inside">
+                        {comp.pros.map((p, j) => <li key={j}>{p}</li>)}
+                      </ul>
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold text-red-600 mb-1">CONS (Your Opportunity)</p>
+                      <ul className="text-sm text-muted-foreground list-disc list-inside">
+                        {comp.cons.map((c, j) => <li key={j}>{c}</li>)}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </Tabs.Content>
 

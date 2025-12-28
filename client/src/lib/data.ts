@@ -9,6 +9,7 @@ export interface KeywordData {
   opportunityScore: number;
   category: 'calculator' | 'generator' | 'health' | 'other';
   recommendation: string;
+  uxGap?: string; // New field for UX opportunity
 }
 
 export const keywordData: KeywordData[] = [
@@ -20,9 +21,10 @@ export const keywordData: KeywordData[] = [
     cpc: 0.85,
     trend: 'rising',
     growth: 15,
-    opportunityScore: 95,
+    opportunityScore: 98, // Increased score due to UX gap
     category: 'calculator',
-    recommendation: 'Start Here'
+    recommendation: 'Start Here',
+    uxGap: 'Existing tools are too medical/complex. Opportunity for "Human-Language" UI.'
   },
   {
     id: '2',
@@ -34,7 +36,8 @@ export const keywordData: KeywordData[] = [
     growth: 20,
     opportunityScore: 92,
     category: 'calculator',
-    recommendation: 'Start Here'
+    recommendation: 'Start Here',
+    uxGap: 'Competitors lack breed-specific growth curves.'
   },
   {
     id: '3',
@@ -228,4 +231,28 @@ export const trendData = [
   { month: 'Oct', dogAge: 90, petName: 72, catAge: 45 },
   { month: 'Nov', dogAge: 95, petName: 75, catAge: 48 },
   { month: 'Dec', dogAge: 100, petName: 78, catAge: 50 },
+];
+
+export const competitorAnalysis = [
+  {
+    name: 'Pet Nutrition Alliance',
+    type: 'Authority',
+    pros: ['Highly authoritative', 'Comprehensive inputs'],
+    cons: ['Complex "Medical" UI', 'Requires BCS knowledge', 'Not mobile-friendly'],
+    vulnerability: 'High'
+  },
+  {
+    name: 'Vet Calculators',
+    type: 'Tool Aggregator',
+    pros: ['Functional', 'Quick calculation'],
+    cons: ['Ad-heavy', 'Outdated design', 'Confusing flow'],
+    vulnerability: 'Medium'
+  },
+  {
+    name: 'Purina Institute',
+    type: 'Brand',
+    pros: ['Clean design', 'Simple inputs'],
+    cons: ['Hard to find', 'Generic results', 'Brand bias'],
+    vulnerability: 'Medium'
+  }
 ];
