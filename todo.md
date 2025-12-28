@@ -59,3 +59,7 @@
 - [x] Add breadcrumb navigation
 - [ ] Enhance internal linking
 - [ ] Add image alt texts
+
+## Bug Fixes - Round 2
+- [x] Fix "View All Tools" button click not working
+- [x] Replace logo with better design (no white background, transparent)

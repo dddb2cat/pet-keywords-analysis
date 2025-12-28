@@ -45,11 +45,14 @@ export default function LandingPage() {
                 Try Dog Calorie Calculator
               </Button>
             </Link>
-            <Link href="#tools">
-              <Button size="lg" variant="outline" className="px-8 py-6 text-lg">
-                View All Tools
-              </Button>
-            </Link>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="px-8 py-6 text-lg"
+              onClick={() => document.getElementById('tools')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              View All Tools
+            </Button>
           </div>
         </div>
       </section>
