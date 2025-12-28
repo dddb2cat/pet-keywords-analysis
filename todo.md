@@ -36,3 +36,6 @@
 - [ ] Cat calorie calculator
 - [ ] Dog age calculator
 - [ ] Pet name generator
+
+## Bug Fixes
+- [x] Fix progress bar connector lines alignment issue

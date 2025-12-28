@@ -99,25 +99,32 @@ export default function DogCalorieCalculator() {
       {/* Progress Bar */}
       <div className="container mb-8">
         <div className="max-w-2xl mx-auto">
-          <div className="flex items-center justify-between mb-2">
-            {['name', 'weight', 'body-condition', 'activity', 'results'].map((step, index) => (
-              <div key={step} className="flex items-center">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${
-                  ['name', 'weight', 'body-condition', 'activity', 'results'].indexOf(currentStep) >= index
-                    ? 'bg-orange-500 text-white'
-                    : 'bg-gray-200 text-gray-500'
-                }`}>
-                  {index + 1}
+          <div className="flex items-center justify-center gap-0">
+            {['name', 'weight', 'body-condition', 'activity', 'results'].map((step, index) => {
+              const steps = ['name', 'weight', 'body-condition', 'activity', 'results'];
+              const currentIndex = steps.indexOf(currentStep);
+              const isActive = currentIndex >= index;
+              const isCompleted = currentIndex > index;
+              
+              return (
+                <div key={step} className="flex items-center">
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all shadow-md ${
+                    isActive
+                      ? 'bg-orange-500 text-white'
+                      : 'bg-white text-gray-400 border-2 border-gray-200'
+                  }`}>
+                    {index + 1}
+                  </div>
+                  {index < 4 && (
+                    <div className={`w-16 md:w-20 h-1 transition-all ${
+                      isCompleted
+                        ? 'bg-orange-500'
+                        : 'bg-gray-200'
+                    }`} />
+                  )}
                 </div>
-                {index < 4 && (
-                  <div className={`w-12 h-1 mx-1 transition-all ${
-                    ['name', 'weight', 'body-condition', 'activity', 'results'].indexOf(currentStep) > index
-                      ? 'bg-orange-500'
-                      : 'bg-gray-200'
-                  }`} />
-                )}
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
