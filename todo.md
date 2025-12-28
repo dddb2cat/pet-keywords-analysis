@@ -63,3 +63,8 @@
 ## Bug Fixes - Round 2
 - [x] Fix "View All Tools" button click not working
 - [x] Replace logo with better design (no white background, transparent)
+
+## Updates - Round 3
+- [x] Export keyword research report to PDF file
+- [x] Remove Research link from website navigation
+- [x] Fix Privacy and Terms footer links (make them functional or remove)

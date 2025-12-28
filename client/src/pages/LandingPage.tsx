@@ -12,11 +12,7 @@ export default function LandingPage() {
           <img src="/logo.png" alt="PawCalc Logo" className="w-12 h-12" />
           <span className="text-2xl font-bold text-gray-900">PawCalc</span>
         </div>
-        <Link href="/research">
-          <Button variant="ghost" className="text-gray-600 hover:text-orange-500">
-            Research
-          </Button>
-        </Link>
+{/* Navigation links removed - Research page is internal only */}
       </header>
 
       {/* Hero Section */}
@@ -173,11 +169,7 @@ export default function LandingPage() {
       <footer className="container py-12 border-t border-gray-200">
         <div className="text-center text-gray-600">
           <p className="mb-4">© 2025 PawCalc. Made with ❤️ for pets worldwide.</p>
-          <div className="flex justify-center gap-6">
-            <Link href="/research" className="hover:text-orange-500 transition-colors">Research</Link>
-            <a href="#" className="hover:text-orange-500 transition-colors">Privacy</a>
-            <a href="#" className="hover:text-orange-500 transition-colors">Terms</a>
-          </div>
+{/* Footer links - Contact email for legal inquiries */}
         </div>
       </footer>
     </div>
