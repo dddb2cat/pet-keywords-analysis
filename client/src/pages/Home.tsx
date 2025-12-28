@@ -12,8 +12,12 @@ import { cn } from '@/lib/utils';
 import * as Tabs from '@radix-ui/react-tabs';
 import * as ScrollArea from '@radix-ui/react-scroll-area';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/_core/hooks/useAuth';
 
 export default function Home() {
+  // Authentication is optional for this public tool
+  // const { user, isAuthenticated } = useAuth();
+
   const [activeTab, setActiveTab] = useState('opportunities');
   const [sortConfig, setSortConfig] = useState<{ key: keyof KeywordData; direction: 'asc' | 'desc' }>({
     key: 'opportunityScore',
