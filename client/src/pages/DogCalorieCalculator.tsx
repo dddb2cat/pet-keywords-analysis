@@ -102,7 +102,7 @@ export default function DogCalorieCalculator() {
   const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-blue-50 flex flex-col">
+    <div className="min-h-screen organic-texture bg-background flex flex-col animate-fade-in">
       <SEO
         title="Dog Calorie Calculator - Daily Food Requirements | PawCalc"
         description="Calculate your dog's daily calorie needs with our free, science-backed calculator. Get personalized feeding recommendations based on weight, activity level, and body condition."
@@ -121,18 +121,24 @@ export default function DogCalorieCalculator() {
         }}
       />
       {/* Header */}
-      <header className="container py-6 flex items-center justify-between">
+      <header className="container py-8 flex items-center justify-between">
         <Link href="/">
-          <div className="flex items-center gap-3 cursor-pointer">
-            <img src="/logo.png" alt="PawCalc Logo" className="w-10 h-10" />
-            <span className="text-xl font-bold text-gray-900">PawCalc</span>
+          <div className="flex items-center gap-3 cursor-pointer group">
+            <div className="relative">
+              <img src="/logo.png" alt="PawCalc Logo" className="w-12 h-12 rounded-xl shadow-lg group-hover:scale-105 transition-transform" />
+              <div className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full" />
+            </div>
+            <div>
+              <span className="text-2xl font-bold text-foreground font-serif">PawCalc</span>
+              <div className="text-xs text-muted-foreground tracking-wider">CALORIE CALCULATOR</div>
+            </div>
           </div>
         </Link>
         <Link href="/">
-          <Button variant="ghost" className="gap-2">
+          <button className="refined-btn-secondary flex items-center gap-2 px-5 py-3">
             <ArrowLeft className="w-4 h-4" />
             Back to Home
-          </Button>
+          </button>
         </Link>
       </header>
 
@@ -145,68 +151,87 @@ export default function DogCalorieCalculator() {
       </div>
 
       {/* Progress Bar */}
-      <div className="container mb-8">
-        <div className="max-w-2xl mx-auto">
-          <div className="flex items-center justify-center gap-0">
+      <div className="container mb-12">
+        <div className="max-w-3xl mx-auto">
+          <div className="flex items-center justify-center gap-2">
             {['name', 'weight', 'body-condition', 'activity', 'results'].map((step, index) => {
               const steps = ['name', 'weight', 'body-condition', 'activity', 'results'];
               const currentIndex = steps.indexOf(currentStep);
               const isActive = currentIndex >= index;
               const isCompleted = currentIndex > index;
-              
+              const isCurrent = currentIndex === index;
+
               return (
                 <div key={step} className="flex items-center">
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all shadow-md ${
-                    isActive
-                      ? 'bg-orange-500 text-white'
-                      : 'bg-white text-gray-400 border-2 border-gray-200'
+                  <div className={`relative w-12 h-12 rounded-full flex items-center justify-center text-base font-bold transition-all duration-500 shadow-lg ${
+                    isCurrent
+                      ? 'bg-primary text-primary-foreground scale-110 ring-4 ring-primary/20'
+                      : isActive
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-card text-muted-foreground border-2 border-border'
                   }`}>
                     {index + 1}
+                    {isCompleted && (
+                      <div className="absolute -top-1 -right-1 w-5 h-5 bg-secondary rounded-full flex items-center justify-center">
+                        <Check className="w-3 h-3 text-secondary-foreground" />
+                      </div>
+                    )}
                   </div>
                   {index < 4 && (
-                    <div className={`w-16 md:w-20 h-1 transition-all ${
+                    <div className={`w-16 md:w-24 h-2 rounded-full transition-all duration-500 ${
                       isCompleted
-                        ? 'bg-orange-500'
-                        : 'bg-gray-200'
+                        ? 'bg-primary'
+                        : 'bg-border'
                     }`} />
                   )}
                 </div>
               );
             })}
           </div>
+          <div className="mt-4 text-center">
+            <p className="text-sm text-muted-foreground">
+              Step {steps.indexOf(currentStep) + 1} of 5 • {currentStep.replace('-', ' ').charAt(0).toUpperCase() + currentStep.slice(1)}
+            </p>
+          </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <main className="container flex-1 flex items-center justify-center pb-16">
-        <div className="w-full max-w-2xl bg-white rounded-3xl shadow-xl p-8 md:p-12">
-          
+      <main className="container flex-1 flex items-center justify-center pb-20">
+        <div className="w-full max-w-3xl refined-card p-10 md:p-14">
+
           {/* Step 1: Dog Name */}
           {currentStep === 'name' && (
-            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <div className="text-center space-y-4">
-                <h2 className="text-3xl font-bold text-gray-900">What's your dog's name?</h2>
-                <p className="text-gray-600">Let's personalize this experience! 🐕</p>
+            <div className="space-y-10 animate-slide-up">
+              <div className="text-center space-y-6">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium">
+                  <span>Step 1 of 5</span>
+                </div>
+                <h2 className="text-4xl md:text-5xl font-bold text-foreground">What's your dog's name?</h2>
+                <p className="text-xl text-muted-foreground">Let's personalize this experience! 🐕</p>
               </div>
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <Input
                   type="text"
                   placeholder="e.g., Max, Bella, Charlie..."
                   value={formData.dogName}
                   onChange={(e) => setFormData({ ...formData, dogName: e.target.value })}
-                  className="text-lg p-6 text-center"
+                  className="text-2xl p-8 text-center rounded-2xl border-2 border-input focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all"
                   autoFocus
                 />
+                <div className="text-center text-sm text-muted-foreground">
+                  We'll use this name throughout the calculator to make it feel personal.
+                </div>
               </div>
-              <div className="flex justify-end">
-                <Button
-                  size="lg"
+              <div className="flex justify-end pt-8">
+                <button
                   onClick={handleNext}
                   disabled={!isStepValid()}
-                  className="bg-orange-500 hover:bg-orange-600 text-white px-8"
+                  className="refined-btn flex items-center gap-3 text-lg px-10 py-4 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Next <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
+                  <span>Continue to Weight</span>
+                  <ArrowRight className="w-6 h-6" />
+                </button>
               </div>
             </div>
           )}
